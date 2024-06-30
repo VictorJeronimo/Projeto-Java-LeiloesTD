@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class ProdutosDAO {
     
     Connection conn;
-    PreparedStatement prep;
-    ResultSet resultset;
+    PreparedStatement st;
+    ResultSet rs;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto (ProdutosDTO produto){
