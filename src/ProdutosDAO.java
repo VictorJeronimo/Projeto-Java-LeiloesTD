@@ -1,4 +1,5 @@
 
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -91,4 +92,28 @@ public class ProdutosDAO {
 
         }
     }
+    public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+ArrayList<ProdutosDTO> produtosVendidos = new ArrayList<>();
+
+try(Connection conn = new conectaDAO().connectDB();
+Statement stm = conn.createStatement();
+ResultSet rs = stm.executeQuery(sql)){
+while (rs.next()){
+ProdutosDTO produto = new ProdutosDTO();
+produto.setId(rs.getInt("id"));
+produto.setNome(rs.getString("nome"));
+produto.setValor(rs.getInt("valor"));
+
+produto.setStatus(rs.getString("Status"));
+produtosVendidos.add(produto);
+}
+
+} catch(SQLException e){
+System.out.println(e.getMessage());
+
+}
+return produtosVendidos;
+
+}
 }

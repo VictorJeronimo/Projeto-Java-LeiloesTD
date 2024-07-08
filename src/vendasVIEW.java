@@ -1,9 +1,14 @@
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
+
 public class vendasVIEW extends javax.swing.JFrame {
 
   
     public vendasVIEW() {
         initComponents();
+        listarProdutosVendidos();
     }
 
     @SuppressWarnings("unchecked")
@@ -13,7 +18,7 @@ public class vendasVIEW extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        produtoTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -21,7 +26,7 @@ public class vendasVIEW extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        produtoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -32,7 +37,7 @@ public class vendasVIEW extends javax.swing.JFrame {
                 "Id", "Nome", "Valor", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(produtoTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -112,9 +117,7 @@ public class vendasVIEW extends javax.swing.JFrame {
        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -146,6 +149,27 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
     }
+    private void listarProdutosVendidos(){
+        try {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+
+            DefaultTableModel model = (DefaultTableModel) produtoTable.getModel();
+            model.setNumRows(0);
+
+            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutosVendidos();
+
+            for(int i = 0; i < listagem.size(); i++){
+                model.addRow(new Object[]{
+                    listagem.get(i).getId(),
+                    listagem.get(i).getNome(),
+                    listagem.get(i).getValor(),
+                    listagem.get(i).getStatus()
+                });
+            }
+        } catch (Exception e) {
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -153,6 +177,6 @@ public class vendasVIEW extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable produtoTable;
     // End of variables declaration//GEN-END:variables
 }
